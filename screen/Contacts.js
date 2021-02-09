@@ -1,13 +1,14 @@
-import React from 'react'
+import React from 'react';
 import {
     View,
     Text,
     FlatList,
+    TouchableOpacity,
     StyleSheet
-} from 'react-native'
-
-import colors from '../utils/colors'
+} from 'react-native';
+import colors from '../utils/colors';
 import ContactListItem from '../components/ContactListItem'
+import { Feather } from "@expo/vector-icons";
 const contacts = [
     { id: '1', name: 'Atefah', phone: '0789454645', email: 'Atefah@gmail.com'},
     { id: '2', name: 'Shokofa', phone: '079346873', email: 'Shokofa@gmail.com'},
@@ -20,18 +21,35 @@ const contacts = [
     { id: '9', name: 'Behnam', phone: '075665663', email: 'Behnam@gmail.com'},
     { id: '10', name: 'Marya', phone: '0799457437', email: 'marya@gmail.com'},
 ]
-export default function Contacts(){
-   return (
-    <FlatList
-    data={contacts}
-    keyExtractor={(item)=>item.id}
-    renderItem={({item}) => {
-        return <ContactListItem name={item.name} phone={item.phone} />
-    }}
-    />
-   )
+export default function Contacts({navigation}){
+    return (
+      <View>
+        <FlatList 
+          data={contacts}
+          keyExtractor={(item)=>{item.id}}
+          renderItem={({item}) =>{
+              return <ContactListItem name={item.name} phone={item.phone }  onPress={()=> navigation.navigate('Profile',{item:item})}/>
+          }}
+        />
+        <TouchableOpacity style={styles.floatButton} onPress={()=> navigation.navigate('CreateContact')}>
+          <Text>
+            <Feather name="plus" size={28} color="white" />
+          </Text>
+        </TouchableOpacity>
+      </View>
+      
+
+    )
 
 }
-const styles = StyleSheet.create({
-
+const styles =StyleSheet.create({
+    
+    floatButton:{
+      backgroundColor:'orange',
+      padding:20,
+      borderRadius:'50%',
+      position:'absolute',
+      bottom:40,
+      right:40
+    }
 })
